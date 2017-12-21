@@ -9,13 +9,24 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-EXPOSE 22 
+RUN useradd --system --uid 666 -M --shell /usr/bin/git-shell git && \ 
+    echo git:secret | chpasswd && \
+    mkdir -p /home/git/.ssh && \
+    mkdir /run/sshd && \
+    chown -R git:git /home/git
 
 COPY sshd.conf /etc/ssh/sshd_config
+RUN mkdir /run/ssh
 
-VOLUME /data
-WORKDIR /data
+### Configure an empty git repository
 
-ENTRYPOINT ["sshd"]
-CMD ["default"]
+WORKDIR /repo.git
+RUN git init --bare && \
+    chown git -R /repo.git
+
+COPY main.sh /
+
+EXPOSE 22 
+
+ENTRYPOINT ["/main.sh"]
 
