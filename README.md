@@ -9,7 +9,9 @@ connection.
 Here an example using a local key for authentication.
 
 ```
-docker run --rm -it -p 2288:22 strm/test-git-ssh-server 'ssh-rsa AAAAB3...very very long key....ysx opsxcq@host'
+docker run --rm -it -p 2288:22 \
+  strm/test-git-ssh-server \
+  'ssh-rsa AAAAB3...very very long key....ysx opsxcq@host'
 ```
 
 > If you prefer to use a password authentication, the **git** user has
