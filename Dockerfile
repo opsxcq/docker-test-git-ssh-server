@@ -35,5 +35,5 @@ WORKDIR /root/.ssh
 RUN echo 'localhost '$(cat /etc/ssh/ssh_host_rsa_key.pub) >> known_hosts
 
 COPY check.sh /
-HEALTHCHECK --interval=10s --timeout=3s CMD /check.sh
+HEALTHCHECK --interval=10s --timeout=2s CMD /check.sh
 
