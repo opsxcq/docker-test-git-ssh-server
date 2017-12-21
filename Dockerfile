@@ -31,5 +31,5 @@ EXPOSE 22
 ENTRYPOINT ["/main.sh"]
 
 HEALTHCHECK --interval=5m --timeout=5s \
-  CMD sshpass -p secret ssh git@localhost echo ok || exit 1
+  CMD sshpass -p secret ssh git@localhost | grep -q 'fatal: Interactive git shell is not enabled' || exit 1
 
