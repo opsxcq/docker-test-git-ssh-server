@@ -1,5 +1,12 @@
 # Git server in a container for your integration tests !
 
+![logo](logo.png)
+
+Git is a free and open source distributed version control system designed to
+handle everything from small to very large projects with speed and efficiency.
+
+This image was created to provide some mock git service for integration tests.
+
 ## Running
 
 This container uses port `22` as the entry point for the SSH connection. And
@@ -16,6 +23,8 @@ docker run --rm -it -p 2288:22 \
 
 > If you prefer to use a password authentication, the **git** user has
 > **secret** as it's password.
+
+There is an empty repository at `/repo.git` inside the container.
 
 ## Repository configuration
 
