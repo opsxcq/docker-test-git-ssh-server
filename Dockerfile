@@ -24,12 +24,16 @@ WORKDIR /repo.git
 RUN git init --bare && \
     chown git -R /repo.git
 
-COPY main.sh /
-
 EXPOSE 22 
 
+COPY main.sh /
 ENTRYPOINT ["/main.sh"]
 
-HEALTHCHECK --interval=5m --timeout=5s \
-  CMD sshpass -p secret ssh git@localhost | grep -q 'fatal: Interactive git shell is not enabled' || exit 1
+### Configure local key for healthcheck
+
+WORKDIR /root/.ssh
+RUN echo 'localhost '$(cat /etc/ssh/ssh_host_rsa_key.pub) >> known_hosts
+
+COPY check.sh /
+HEALTHCHECK --interval=10s --timeout=3s CMD /check.sh
 
