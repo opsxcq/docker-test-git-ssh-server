@@ -4,7 +4,7 @@ LABEL maintainer "opsxcq@strm.sh"
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    git openssh-server \
+    git openssh-server sshpass \
     && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -29,4 +29,7 @@ COPY main.sh /
 EXPOSE 22 
 
 ENTRYPOINT ["/main.sh"]
+
+HEALTHCHECK --interval=5m --timeout=5s \
+  CMD sshpass -p secret ssh git@localhost echo ok || exit 1
 
